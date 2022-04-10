@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block content %}
+    <center>
+        <h2>Calories Consumed for this Day: {{ consumed_cal | floatformat:1 }} kcal</h2>
+        <h2>Calories Burned for this Day: {{ burned_cal | floatformat:1 }} kcal</h2>
+    </center>
+    </br></br>
+    {% if user_meals %}
+    <h2 class="text-center">My Meals</h2>
+    <br/><br/>
+    <div class="row">
+        {% for meal in user_meals %}
+            <div class="d-inline p-2 w-50">
+                {% if meal.image %}
+                    <img style="width: 50%" src="{{ meal.image.url }}"
+                         class="card-image" alt="">
+                {% else %}
+                    <img style="width: 50%" src="/static/meal.png"
+                         class="card-image" alt="">
+                {% endif %}
+                <div style="width: 18rem;">
+                    <h5>Name: {{ meal.meal}}</h5>
+                    <h5>Weight: {{ meal.weight }} grams</h5>
+                    <h5>Calories: {{ meal.calories| floatformat:1 }} kcal</h5>
+                </div>
+            </div>
+            {% if forloop.counter|divisibleby:4 %}
+                </div>
+                <div class="row">
+                    {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if user_drinks %}
+    <h2 class="text-center">My Drinks</h2>
+    <br/><br/>
+    <div class="row">
+        {% for drink in user_drinks %}
+            <div class="d-inline p-2 w-50">
+                {% if drink.image %}
+                    <img style="width: 50%" src="{{ drink.image.url }}"
+                         class="card-image" alt="">
+                {% else %}
+                    <img style="width: 50%" src="/static/drinks.png"
+                         class="card-image" alt="">
+                {% endif %}
+                <div style="width: 18rem;">
+                    <h5>Name: {{ drink.drink}}</h5>
+                    <h5>Weight: {{ drink.weight}} grams</h5>
+                    <h5>Calories: {{ drink.calories| floatformat:1 }} kcal</h5>
+                </div>
+            </div>
+            {% if forloop.counter|divisibleby:4 %}
+                </div>
+                <div class="row">
+                    {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% if user_activities %}
+    <h2 class="text-center">My Activities</h2>
+    <br/><br/>
+    <div class="row">
+        {% for activity in user_activities%}
+            <div class="d-inline p-2 w-50">
+                {% if activity.image %}
+                    <img style="width: 50%" src="{{ activity.image.url }}"
+                         class="card-image" alt="">
+                {% else %}
+                    <img style="width: 50%" src="/static/training.png"
+                         class="card-image" alt="">
+                {% endif %}
+                <div style="width: 18rem;">
+                    <h5>Name: {{ activity.activity}}</h5>
+                    <h5>Time: {{ activity.time }} minutes</h5>
+                    <h5>Calories: {{ activity.calories| floatformat:1 }} kcal</h5>
+                </div>
+            </div>
+            {% if forloop.counter|divisibleby:4 %}
+                </div>
+                <div class="row">
+                    {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+    <br/><br/>
+    <center>
+        <a href="{% url 'my history' user_pk %}" class="btn btn-primary">Back to History</a>
+    </center>
+{% endblock %}

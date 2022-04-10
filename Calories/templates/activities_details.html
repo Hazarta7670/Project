@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2 class="text-center">My Activities For {{ date }}</h2>
+    <br/><br/>
+    {% if not user_activities %}
+        <div class="text-center">
+            <a href="{% url 'add activity' %}" class="btn btn-primary">Add Activity</a>
+            {% if all_user_activities %}
+                <a href="{% url 'my history' user_pk%}" class="btn btn-primary">My History</a>
+            {% endif %}
+        </div>
+    {% else %}
+        <div class="text-center">
+            <a href="{% url 'add activity' %}" class="btn btn-primary">Add Activity</a>
+            {% if all_user_activities %}
+                <a href="{% url 'my history' user_pk %}" class="btn btn-primary">My History</a>
+            {% endif %}
+        </div>
+        <div class="row">
+            {% for activity in user_activities %}
+                    <div class="d-inline p-2 w-50">
+                        {% if activity.image %}
+                            <img style="width: 50%" src="{{ activity.image.url }}"
+                                 class="card-image" alt="">
+                        {% else %}
+                            <img style="width: 30%" src="/static/training.png"
+                                 class="card-image" alt="">
+                        {% endif %}
+                        <div style="width: 18rem;">
+                            <h5>Name: {{ activity.activity }}</h5>
+                            <h5>Time: {{ activity.time }} minutes</h5>
+                            <h5>Calories: {{ activity.calories| floatformat:1 }} kcal</h5>
+                            <a href="{% url 'edit activity' activity.pk %}" class="btn btn-primary">Edit Activity</a>
+                            <a href="{% url 'delete activity' activity.pk %}" class="btn btn-danger">Delete Activity</a>
+                        </div>
+                    </div>
+                    {% if forloop.counter|divisibleby:4 %}
+                </div>
+                <div class="row">
+                    {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

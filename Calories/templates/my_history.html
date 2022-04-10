@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h5 class="text-center">
+         <li class="d-inline p-2 w-30">
+            <h2 class="text-center">My History</h2>
+            {% for date in dates %}
+                <h5 class="text-center"> Date: {{ date}}
+                    <a href="{% url 'history'  date.day date.month date.year user_pk %}" class="btn btn-primary">See Details</a>
+                </h5>
+            {% endfor %}
+        </li>
+    </h5>
+{% endblock %}

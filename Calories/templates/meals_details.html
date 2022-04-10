@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2 class="text-center">My Meals For {{ date }}</h2>
+    <br/><br/>
+    {% if not user_meals %}
+        <div class="text-center">
+            <a href="{% url 'add meal' %}" class="btn btn-primary">Add Meal</a>
+            {% if all_user_meals %}
+                <a href="{% url 'my history' user_pk %}" class="btn btn-primary">My History</a>
+            {% endif %}
+        </div>
+    {% else %}
+        <div class="text-center">
+            <a href="{% url 'add meal' %}" class="btn btn-primary">Add Meal</a>
+            {% if all_user_meals %}
+                <a href="{% url 'my history' user_pk %}" class="btn btn-primary">My History</a>
+            {% endif %}
+        </div>
+        <br/><br/>
+         <div class="row">
+            {% for meal in user_meals %}
+                    <div class="d-inline p-2 w-50">
+                        {% if meal.image %}
+                            <img style="width: 50%" src="{{ meal.image.url }}"
+                                 class="card-image" alt="">
+                        {% else %}
+                            <img style="width: 50%" src="/static/meal.png"
+                                 class="card-image" alt="">
+                        {% endif %}
+                        <div style="width: 18rem;">
+                            <h5>Name: {{ meal.meal}}</h5>
+                            <h5>Weight: {{ meal.weight }} grams</h5>
+                            <h5>Calories: {{ meal.calories| floatformat:1 }} kcal</h5>
+                            <a href="{% url 'edit meal' meal.pk %}" class="btn btn-primary">Edit Meal</a>
+                            <a href="{% url 'delete meal' meal.pk %}" class="btn btn-danger">Delete Meal</a>
+                        </div>
+                    </div>
+                    {% if forloop.counter|divisibleby:4 %}
+                </div>
+                <div class="row">
+                    {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

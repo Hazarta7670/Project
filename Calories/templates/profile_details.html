@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="text-center">
+        <div class="d-flex">
+            <div class="d-inline p-2 w-50">
+                <div class="jumbotron">
+                    {% if profile.image %}
+                        <img style="width: 100%" src="{{ profile.image.url }}"
+                            class="card-image" alt="">
+                    {% else %}
+                        <img style="width: 50%" src="/static/profile_image.jpg"
+                            class="card-image" alt="">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="d-inline p-2 w-50">
+                <div class="d-flex flex-column">
+                    <br/><br/>
+                    <h5><u>Name:</u>
+                        {{ profile.first_name }} {{ profile.last_name }}
+                    </h5>
+                    <h5><u>Email:</u>
+                        {{ profile.email }}
+                    </h5>
+                    <h5><u>Age:</u>
+                        {{ profile.age }} years
+                    </h5>
+                    <h5><u>Weight:</u>
+                        {{ profile.weight| floatformat:0}} kg
+                    </h5>
+                    <h5><u>Height:</u>
+                        {{ profile.height| floatformat:0}} cm
+                    </h5>
+                    <h5><u>Activity Level:</u>
+                        {{ profile.activity_level }}
+                    </h5>
+                    <h5><u>Gender:</u>
+                        {{ profile.sex }}
+                    </h5>
+                </div>
+                <br/><br/>
+                <a href="{% url 'edit profile' request.user.pk %}" class="btn btn-primary">Edit Profile</a>
+                <a href="{% url 'delete account' request.user.pk %}" class="btn btn-danger">Delete Profile</a>
+            </div>
+        </div>
+    </div>
+    <div class="jumbotron">
+        <center>
+            <h5>Basal Metabolism: {{ basal_metabolism| floatformat:1 }} kcal/day</h5>
+            <h5>Body Mass Index: {{ bmi| floatformat:1 }} - {{ normal }}</h5>
+            <h5>My Daily Calorie Consumption: {{ daily_cal | floatformat:1 }} kcal</h5>
+            <h5>Burned Calories: {{ burned | floatformat:1 }} kcal</h5>
+        </center>
+    </div>
+{% endblock %}
