@@ -159,44 +159,53 @@ def delete_activity_view(request, pk):
         return redirect('activities details')
 
 
-def my_history(request, pk):
-    user_meals = sorted(list(Meals.objects.filter(user_id=pk).distinct('date_of_input')),
-                        key=lambda x: x.date_of_input)
-    user_drinks = sorted(list(Drinks.objects.filter(user_id=pk).distinct('date_of_input')),
-                         key=lambda x: x.date_of_input)
-    user_activities = sorted(list(Activities.objects.filter(user_id=pk).distinct('date_of_input')),
+class MyHistory(TemplateView):
+    template_name = 'my_history.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user_meals = sorted(list(Meals.objects.filter(user_id=self.request.user.pk).distinct('date_of_input')),
+                            key=lambda x: x.date_of_input)
+        user_drinks = sorted(list(Drinks.objects.filter(user_id=self.request.user.pk).distinct('date_of_input')),
                              key=lambda x: x.date_of_input)
-    dates = []
-    user_pk = request.user.pk
-    for meal in user_meals:
-        if meal.date_of_input not in dates:
-            dates.append(meal.date_of_input)
-    for drink in user_drinks:
-        if drink.date_of_input not in dates:
-            dates.append(drink.date_of_input)
-    for activity in user_activities:
-        if activity.date_of_input not in dates:
-            dates.append(activity.date_of_input)
-    return render(request, 'my_history.html', {'dates': dates, 'user_pk': user_pk})
+        user_activities = sorted(list(Activities.objects.filter(user_id=self.request.user.pk).distinct('date_of_input')),
+                                 key=lambda x: x.date_of_input)
+        dates = []
+        user_pk = self.request.user.pk
+        for meal in user_meals:
+            if meal.date_of_input not in dates:
+                dates.append(meal.date_of_input)
+        for drink in user_drinks:
+            if drink.date_of_input not in dates:
+                dates.append(drink.date_of_input)
+        for activity in user_activities:
+            if activity.date_of_input not in dates:
+                dates.append(activity.date_of_input)
+        context.update({'dates': dates, 'user_pk': user_pk})
+        return context
 
 
-def history_of_day(request, day, month, year, pk):
+class HistoryOfTheDay(TemplateView):
+    template_name = 'history_of_day.html'
 
-    user_meals = list(Meals.objects.filter(date_of_input__year=year,
-                                           date_of_input__month=month,
-                                           date_of_input__day=day,
-                                           user_id=pk))
-    user_drinks = list(Drinks.objects.filter(date_of_input__year=year,
-                                             date_of_input__month=month,
-                                             date_of_input__day=day,
-                                             user_id=pk))
-    user_activities = list(Activities.objects.filter(date_of_input__year=year,
-                                                     date_of_input__month=month,
-                                                     date_of_input__day=day,
-                                                     user_id=pk))
-    consumed_cal = sum([meal.calories for meal in user_meals]) + sum([drink.calories for drink in user_drinks])
-    burned_cal = sum([activity.calories for activity in user_activities])
-    user_pk = request.user.pk
-    return render(request, 'history_of_day.html', {'user_meals': user_meals, 'user_drinks': user_drinks,
-                                                   'user_activities': user_activities, 'user_pk': user_pk,
-                                                   'consumed_cal': consumed_cal, 'burned_cal': burned_cal})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user_meals = list(Meals.objects.filter(date_of_input__year=context['year'],
+                                               date_of_input__month=context['month'],
+                                               date_of_input__day=context['day'],
+                                               user_id=self.request.user.pk))
+        user_drinks = list(Drinks.objects.filter(date_of_input__year=context['year'],
+                                                 date_of_input__month=context['month'],
+                                                 date_of_input__day=context['day'],
+                                                 user_id=self.request.user.pk))
+        user_activities = list(Activities.objects.filter(date_of_input__year=context['year'],
+                                                         date_of_input__month=context['month'],
+                                                         date_of_input__day=context['day'],
+                                                         user_id=self.request.user.pk))
+        consumed_cal = sum([meal.calories for meal in user_meals]) + sum([drink.calories for drink in user_drinks])
+        burned_cal = sum([activity.calories for activity in user_activities])
+        user_pk = self.request.user.pk
+        context.update({'user_meals': user_meals, 'user_drinks': user_drinks,
+                                                  'user_activities': user_activities, 'user_pk': user_pk,
+                                                  'consumed_cal': consumed_cal, 'burned_cal': burned_cal})
+        return context

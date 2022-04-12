@@ -8,8 +8,8 @@ urlpatterns = [
     path('register/', RegistrateUser.as_view(), name='registrate user'),
     path('login/', Login.as_view(), name='login page'),
     path('logout/', Logout.as_view(), name='logout page'),
-    path('create/', ProfileView.as_view(), name='create profile'),
-    path('details/<int:pk>', ProfileDetailsView.as_view(), name='profile details'),
+    path('create/profile/', ProfileView.as_view(), name='create profile'),
+    path('details/<int:pk>/', ProfileDetailsView.as_view(), name='profile details'),
     path('edit/<int:pk>/', UpdateProfileView.as_view(), name='edit profile'),
     path('delete/<int:pk>/', DeleteProfileView.as_view(), name='delete account')
 ]

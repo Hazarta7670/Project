@@ -77,17 +77,14 @@ class Profile(models.Model):
 
     age = models.IntegerField(validators=(MinValueValidator(MIN_AGE),
                                           ),
-                              default=MIN_AGE,
                               )
 
     weight = models.FloatField(validators=(MinValueValidator(MIN_WEIGHT),
                                            ),
-                               default=MIN_WEIGHT,
                                )
 
     height = models.FloatField(validators=(MinValueValidator(MIN_HEIGHT),
                                            ),
-                               default=MIN_HEIGHT,
                                )
     activity_level = models.CharField(max_length=max(len(x) for x, _ in ACTIVITY_LEVEL_CHOICES),
                                       choices=ACTIVITY_LEVEL_CHOICES,

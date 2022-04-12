@@ -9,7 +9,7 @@ TheUser = get_user_model()
 
 class Meals(models.Model):
     MAX_LEN = 255
-    MIN_WEIGHT = 0
+    MIN_WEIGHT_CALORIES = 0
     MIN_LEN = 3
 
     meal = models.CharField(max_length=MAX_LEN,
@@ -17,13 +17,12 @@ class Meals(models.Model):
                                         ),
                             )
 
-    weight = models.FloatField(validators=(MinValueValidator(MIN_WEIGHT),
-                                           ),
-                               default=MIN_WEIGHT)
+    weight = models.FloatField(validators=(MinValueValidator(MIN_WEIGHT_CALORIES),
+                                           )
+                               )
 
-    calories = models.FloatField(validators=(MinValueValidator(MIN_WEIGHT),
-                                             ),
-                                 default=MIN_WEIGHT,
+    calories = models.FloatField(validators=(MinValueValidator(MIN_WEIGHT_CALORIES),
+                                             )
                                  )
 
     image = models.ImageField(validators=(image_max_size,
@@ -43,7 +42,7 @@ class Meals(models.Model):
 
 class Drinks(models.Model):
     MAX_LEN = 255
-    MIN_WEIGHT = 0
+    MIN_WEIGHT_CALORIES = 0
     MIN_LEN = 3
 
     drink = models.CharField(max_length=MAX_LEN,
@@ -51,13 +50,12 @@ class Drinks(models.Model):
                                          ),
                              )
 
-    weight = models.FloatField(validators=(MinValueValidator(MIN_WEIGHT),
-                                           ),
-                               default=MIN_WEIGHT)
+    weight = models.FloatField(validators=(MinValueValidator(MIN_WEIGHT_CALORIES),
+                                           )
+                               )
 
-    calories = models.FloatField(validators=(MinValueValidator(MIN_WEIGHT),
-                                             ),
-                                 default=MIN_WEIGHT,
+    calories = models.FloatField(validators=(MinValueValidator(MIN_WEIGHT_CALORIES),
+                                             )
                                  )
 
     image = models.ImageField(validators=(image_max_size,
@@ -77,7 +75,7 @@ class Drinks(models.Model):
 
 class Activities(models.Model):
     MAX_LEN = 255
-    MIN_WEIGHT = 0
+    MIN_TIME_CALORIES = 0
     MIN_LEN = 3
 
     activity = models.CharField(max_length=MAX_LEN,
@@ -85,14 +83,12 @@ class Activities(models.Model):
                                             ),
                                 )
 
-    time = models.FloatField(validators=(MinValueValidator(MIN_WEIGHT),
-                                         ),
-                             default=MIN_WEIGHT,
+    time = models.FloatField(validators=(MinValueValidator(MIN_TIME_CALORIES),
+                                         )
                              )
 
-    calories = models.FloatField(validators=(MinValueValidator(MIN_WEIGHT),
+    calories = models.FloatField(validators=(MinValueValidator(MIN_TIME_CALORIES),
                                              ),
-                                 default=MIN_WEIGHT,
                                  )
 
     image = models.ImageField(validators=(image_max_size,

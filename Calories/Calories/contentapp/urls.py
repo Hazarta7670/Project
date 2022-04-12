@@ -2,7 +2,7 @@ from django.urls import path
 
 from Calories.contentapp.views import MealView, MealsDetailsView, MealsEditView, delete_meal_view, DrinkView, \
     DrinksDetailsView, DrinksEditView, delete_drink_view, ActivityView, ActivitiesDetailsView, ActivitiesEditView, \
-    delete_activity_view, my_history, history_of_day
+    delete_activity_view, MyHistory, HistoryOfTheDay
 
 urlpatterns = [
     path('meals/add/', MealView.as_view(), name='add meal'),
@@ -20,6 +20,6 @@ urlpatterns = [
     path('activities/edit/activity/<int:pk>/', ActivitiesEditView.as_view(), name='edit activity'),
     path('activities/delete/activity/<int:pk>/', delete_activity_view, name='delete activity'),
 
-    path('my_history/<int:pk>', my_history, name='my history'),
-    path('history/<int:day>/<int:month>/<int:year>/<int:pk>/', history_of_day, name='history'),
+    path('my_history/<int:pk>', MyHistory.as_view(), name='my history'),
+    path('history/<int:day>/<int:month>/<int:year>/<int:pk>/', HistoryOfTheDay.as_view(), name='history'),
 ]

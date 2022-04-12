@@ -36,7 +36,11 @@ class Login(LoginView):
     template_name = 'login_page.html'
 
     def get_success_url(self):
-        return reverse('home page')
+        try:
+            profile = Profile.objects.get(pk=self.request.user.pk)
+            return reverse('profile details', kwargs={'pk': profile.pk})
+        except:
+            return reverse('create profile')
 
 
 class Logout(LogoutView):
@@ -102,7 +106,6 @@ class UpdateProfileView(UpdateView):
     model = Profile
     fields = ['first_name', 'last_name', 'email', 'age', 'weight', 'height', 'activity_level', 'sex', 'image']
     template_name = 'profile_edit.html'
-    context_object_name = 'profile'
 
     def get_success_url(self):
         return reverse('profile details', kwargs={'pk': self.object.pk})

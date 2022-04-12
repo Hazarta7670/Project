@@ -6,7 +6,6 @@
     <meta charset="UTF-8">
     <title>CalorieCounter</title>
 
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="icon" type="image/jpg" href="/static/apple.jpg">
@@ -16,7 +15,6 @@
 
 <body style="background-image: url('/static/background.jpg'); width: 100%">
 
-<!-- Navigation Bar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-bottom:1%">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,9 +23,6 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
             {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'home page' %}">Home</a>
-                </li>
                 {% if user.profile.first_name %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'profile details' request.user.pk %}">Profile</a>
@@ -43,7 +38,7 @@
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'create profile' %}">Fill in your Profile</a>
+                        <a class="nav-link" href="{% url 'create profile'%}">Fill in your Profile</a>
                     </li>
                 {% endif %}
                 <li class="nav-item">
@@ -60,17 +55,11 @@
         </ul>
     </div>
 </nav>
-<!-- End Navigation Bar -->
 
-<!-- Profile Information -->
 <div class="container">
     {% block content %}
     {% endblock %}
 </div>
-
-<!-- Page Footer -->
-
-<!-- End Page Footer -->
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
