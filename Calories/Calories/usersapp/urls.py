@@ -1,7 +1,7 @@
 from django.urls import path
 
 from Calories.usersapp.views import HomePage, RegistrateUser, Login, Logout, ProfileView, ProfileDetailsView, \
-    UpdateProfileView, DeleteProfileView
+    UpdateProfileView, DeleteProfileView, ChangePasswordView
 
 urlpatterns = [
     path('', HomePage.as_view(), name='home page'),
@@ -11,5 +11,6 @@ urlpatterns = [
     path('create/profile/', ProfileView.as_view(), name='create profile'),
     path('details/<int:pk>/', ProfileDetailsView.as_view(), name='profile details'),
     path('edit/<int:pk>/', UpdateProfileView.as_view(), name='edit profile'),
-    path('delete/<int:pk>/', DeleteProfileView.as_view(), name='delete account')
+    path('delete/<int:pk>/', DeleteProfileView.as_view(), name='delete account'),
+    path('change/password/<int:pk>/', ChangePasswordView.as_view(), name='change password'),
 ]

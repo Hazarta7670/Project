@@ -41,7 +41,8 @@
                 </div>
                 <br/><br/>
                 <a href="{% url 'edit profile' request.user.pk %}" class="btn btn-primary">Edit Profile</a>
-                <a href="{% url 'delete account' request.user.pk %}" class="btn btn-danger">Delete Profile</a>
+                <a href="{% url 'delete account' request.user.pk %}" class="btn btn-danger">Delete Account</a>
+                <a href="{% url 'change password' request.user.pk %}" class="btn btn-primary">Change Password</a>
             </div>
         </div>
     </div>

@@ -1,12 +1,12 @@
 from datetime import datetime
 
 from django.contrib.auth import get_user_model
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, CreateView, DetailView, UpdateView, DeleteView
 
 from Calories.contentapp.models import Meals, Drinks, Activities
-from Calories.usersapp.forms import ProfileForm, UserForm
+from Calories.usersapp.forms import ProfileForm, UserForm, LoginForm, ChangePasswordForm
 from Calories.usersapp.models import Profile
 
 
@@ -33,6 +33,7 @@ class RegistrateUser(CreateView):
 
 
 class Login(LoginView):
+    form_class = LoginForm
     template_name = 'login_page.html'
 
     def get_success_url(self):
@@ -45,6 +46,14 @@ class Login(LoginView):
 
 class Logout(LogoutView):
     pass
+
+
+class ChangePasswordView(PasswordChangeView):
+    form_class = ChangePasswordForm
+    template_name = 'change_pass.html'
+
+    def get_success_url(self):
+        return reverse('profile details', kwargs={'pk': self.request.user.pk})
 
 
 class ProfileDetailsView(DetailView):
@@ -108,7 +117,7 @@ class UpdateProfileView(UpdateView):
     template_name = 'profile_edit.html'
 
     def get_success_url(self):
-        return reverse('profile details', kwargs={'pk': self.object.pk})
+        return reverse('profile details', kwargs={'pk': self.request.user.pk})
 
 
 class DeleteProfileView(DeleteView):

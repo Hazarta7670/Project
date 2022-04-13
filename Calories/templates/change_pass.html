@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="container mb-5">
-    <h1 class="text-center">Login</h1>
+   <div class="container mb-5">
+    <h1 class="text-center">Change Password</h1>
         <br/><br/>
     <div class="row">
         <div class="col-lg-3"></div>
@@ -9,10 +9,10 @@
             <form method="post" class="text-left">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button class="btn btn-primary mt-2" type="submit">Log in</button>
+                <button class="btn btn-primary mt-2" type="submit">Change Password</button>
             </form>
         </div>
         <div class="col-lg-3"></div>
     </div>
-</div>
+    </div>
 {% endblock %}
