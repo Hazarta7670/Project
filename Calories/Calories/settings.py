@@ -29,6 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
+    'my-calories-app.herokuapp.com'
 ]
 
 
@@ -84,10 +85,10 @@ WSGI_APPLICATION = 'Calories.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres1',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': '127.0.0.1',
+        'NAME': 'dbp67h19s88nfp',
+        'USER': 'thqdnrehtagbtr',
+        'PASSWORD': '452c675300f4a59d4705a9e38285c40c7610641add19d0ef157ce24de122309a',
+        'HOST': 'ec2-63-32-248-14.eu-west-1.compute.amazonaws.com',
         'PORT': '5432',
     }
 }
