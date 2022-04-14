@@ -2,6 +2,7 @@ from datetime import datetime
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
+from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, CreateView, DetailView, UpdateView, DeleteView
 
@@ -40,7 +41,7 @@ class Login(LoginView):
         try:
             profile = Profile.objects.get(pk=self.request.user.pk)
             return reverse('profile details', kwargs={'pk': profile.pk})
-        except:
+        except Profile.DoesNotExist:
             return reverse('create profile')
 
 
@@ -124,3 +125,7 @@ class DeleteProfileView(DeleteView):
     model = get_user_model()
     template_name = 'delete_account.html'
     success_url = reverse_lazy('home page')
+
+
+def errors(request):
+    return render(request, 'error.html')

@@ -386,3 +386,58 @@ class TestProfileDetailsView(TestCase):
                                              )
         response = self.client.get(reverse('profile details', kwargs={'pk': profile.pk}))
         self.assertEqual(response.context['burned'], 300)
+
+
+class TestChangePasswordView(TestCase):
+    test_user = {
+        'username': 'testuser',
+        'password': '123456'
+    }
+    test_profile = {
+        'first_name': 'hristo',
+        'last_name': 'stoyanov',
+        'email': 'hss1993@abv.bg',
+        'age': 28,
+        'weight': 85,
+        'height': 182,
+        'activity_level': 'Moderately loaded Exercises Two-Three times a Week',
+        'sex': 'Male',
+    }
+
+    def test_correct_template(self):
+        user = TheUser.objects.create_user(**self.test_user)
+        self.client.login(**self.test_user)
+        profile = Profile.objects.create(**self.test_profile,
+                                         user=user,
+                                         )
+        response = self.client.get(reverse('change password', kwargs={'pk': user.pk}))
+        self.assertTemplateUsed('change_pass.html')
+
+    def test_if_password_is_changed(self):
+        user = TheUser.objects.create_user(**self.test_user)
+        self.client.login(**self.test_user)
+        profile = Profile.objects.create(**self.test_profile,
+                                         user=user,
+                                         )
+        response = self.client.post(reverse('change password', kwargs={'pk': user.pk}),
+                                    {'old_password': self.test_user['password'],
+                                     'new_password1': 1234567,
+                                     'new_password2': 1234567,
+                                     })
+        user.refresh_from_db()
+        user_with_new_pass = {'username': 'testuser', 'password': 1234567}
+        self.client.login(**user_with_new_pass)
+
+    def test_success_url(self):
+        user = TheUser.objects.create_user(**self.test_user)
+        self.client.login(**self.test_user)
+        profile = Profile.objects.create(**self.test_profile,
+                                         user=user,
+                                         )
+        response = self.client.post(reverse('change password', kwargs={'pk': user.pk}),
+                                    {'old_password': self.test_user['password'],
+                                     'new_password1': 1234567,
+                                     'new_password2': 1234567,
+                                     })
+        user.refresh_from_db()
+        self.assertRedirects(response, reverse('profile details', kwargs={'pk': profile.pk}))

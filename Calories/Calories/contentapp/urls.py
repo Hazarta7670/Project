@@ -21,5 +21,5 @@ urlpatterns = [
     path('activities/delete/activity/<int:pk>/', delete_activity_view, name='delete activity'),
 
     path('my_history/<int:pk>', MyHistory.as_view(), name='my history'),
-    path('history/<int:day>/<int:month>/<int:year>/<int:pk>/', HistoryOfTheDay.as_view(), name='history'),
+    path('history/<int:pk>/<int:day>/<int:month>/<int:year>/', HistoryOfTheDay.as_view(), name='history'),
 ]

@@ -5,7 +5,7 @@
             <h2 class="text-center">My History</h2>
             {% for date in dates %}
                 <h5 class="text-center"> Date: {{ date}}
-                    <a href="{% url 'history'  date.day date.month date.year user_pk %}" class="btn btn-primary">See Details</a>
+                    <a href="{% url 'history' user_pk date.day date.month date.year %}" class="btn btn-primary">See Details</a>
                 </h5>
             {% endfor %}
         </li>

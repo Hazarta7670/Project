@@ -1,8 +1,9 @@
 from datetime import datetime
 
+from django.contrib.auth import get_user_model
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, TemplateView, UpdateView
+from django.views.generic import CreateView, TemplateView, UpdateView, DetailView
 
 from Calories.contentapp.forms import MealForm, DeleteMealForm, DrinkForm, DeleteDrinkForm, ActivityForm, \
     DeleteActivityForm
@@ -159,8 +160,12 @@ def delete_activity_view(request, pk):
         return redirect('activities details')
 
 
-class MyHistory(TemplateView):
+class MyHistory(DetailView):
     template_name = 'my_history.html'
+
+    def get_queryset(self):
+        user = get_user_model().objects.filter(pk=self.request.user.pk)
+        return user
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
