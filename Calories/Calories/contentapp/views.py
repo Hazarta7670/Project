@@ -186,6 +186,7 @@ class MyHistory(DetailView):
         for activity in user_activities:
             if activity.date_of_input not in dates:
                 dates.append(activity.date_of_input)
+        dates = sorted(dates, key=lambda x: x)
         context.update({'dates': dates, 'user_pk': user_pk})
         return context
 
